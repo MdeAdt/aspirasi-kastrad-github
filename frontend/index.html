@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KASTRAD - Platform Aspirasi</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-title">
+            <h1>KASTRAD</h1>
+            <p class="jargon">Siap Menerima Aspirasi Dari Anda</p>
+        </div>
+        <nav id="nav-links"></nav>
+    </header>
+    <main>
+        <section id="profile-kastrad">
+            <h2>Tentang Divisi Kastrad</h2>
+            <div class="profile-content">
+                <p>Kastrad (Kajian Strategis dan Advokasi) adalah sebuah departemen atau bidang dalam organisasi
+                    mahasiswa yang berfungsi sebagai motor penggerak intelektual dan advokasi. Mereka bertanggung jawab
+                    untuk melakukan analisis mendalam terhadap berbagai isu strategis, baik di tingkat kampus maupun
+                    nasional. Hasil dari kajian tersebut kemudian menjadi dasar untuk merumuskan sikap resmi organisasi.
+                    Selanjutnya, mereka memperjuangkan atau mengadvokasikan sikap dan aspirasi tersebut kepada
+                    pihak-pihak yang berwenang, seperti rektorat atau pemerintah, demi kepentingan mahasiswa dan
+                    masyarakat.</p>
+            </div>
+        </section>
+        <div id="user-dashboard" class="hidden">
+            <section id="form-aspirasi">
+                <h2>Sampaikan Aspirasi Baru</h2>
+                <form id="aspiration-form">
+                    <label for="nama_pengirim">Nama Lengkap</label>
+                    <input type="text" id="nama_pengirim" placeholder="Masukkan nama lengkap Anda" required>
+
+                    <label for="npm_pengirim">NPM</label>
+                    <input type="text" id="npm_pengirim" placeholder="Masukkan NPM Anda" required inputmode="numeric"
+                        pattern="[0-9]*">
+                    <label for="angkatan_pengirim">Angkatan</label>
+                    <select id="angkatan_pengirim" required>
+                        <option value="">-- Pilih Angkatan --</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+
+                    <label for="kelas_pengirim">Kelas</label>
+                    <select id="kelas_pengirim" required disabled>
+                        <option value="">-- Pilih Angkatan Dulu --</option>
+                    </select>
+
+                    <hr>
+
+                    <label for="title">Judul Aspirasi</label>
+                    <input type="text" id="title" placeholder="Judul Aspirasi" required>
+
+                    <label for="content">Isi Aspirasi</label>
+                    <textarea id="content" placeholder="Jelaskan aspirasi Anda di sini..." required></textarea>
+
+                    <button type="submit">Kirim Aspirasi</button>
+                </form>
+            </section>
+            <section id="history-aspirasi">
+                <h2>Riwayat Aspirasi Anda</h2>
+                <div id="aspirations-history-container" class="aspirations-list"></div>
+            </section>
+        </div>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
