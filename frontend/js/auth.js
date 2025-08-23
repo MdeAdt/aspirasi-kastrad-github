@@ -1,4 +1,4 @@
-const API_URL = '/api';
+const API_URL = '/api/auth';
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
 const showRegisterLink = document.getElementById('show-register');
