@@ -39,24 +39,37 @@ if (angkatanSelect) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => { checkLoginStatus(); });
+document.addEventListener('DOMContentLoaded', () => {
+    checkLoginStatus();
+});
 
+// GANTI SELURUH FUNGSI INI
 function checkLoginStatus() {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
+
     if (token && user) {
+        // Pengguna sudah login
         navLinks.innerHTML = `
             ${user.role === 'admin' ? '<a href="admin.html">Dasbor Admin</a>' : ''}
             <button id="logout-btn">Logout</button>`;
         document.getElementById('logout-btn').addEventListener('click', logout);
-        profileKastrad.classList.add('hidden');
-        userDashboard.classList.remove('hidden');
-        const aspirationForm = document.getElementById('aspiration-form');
-        if (aspirationForm) {
-            aspirationForm.addEventListener('submit', handleAspirationSubmit);
+
+        // --- PERUBAHAN UTAMA DI SINI ---
+        // Hanya tampilkan dasbor pengguna jika rolenya BUKAN 'admin'
+        if (user.role !== 'admin') {
+            profileKastrad.classList.add('hidden');
+            userDashboard.classList.remove('hidden');
+            fetchUserHistory();
+        } else {
+            // Jika admin, biarkan halaman profil yang tampil
+            profileKastrad.classList.remove('hidden');
+            userDashboard.classList.add('hidden');
         }
-        fetchUserHistory();
+        // --------------------------------
+
     } else {
+        // Pengguna belum login
         navLinks.innerHTML = '<a href="login.html">Login / Register</a>';
         profileKastrad.classList.remove('hidden');
         userDashboard.classList.add('hidden');
@@ -73,7 +86,9 @@ async function fetchUserHistory() {
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(`${API_URL}/aspirations/my-history`, {
-            headers: { 'x-auth-token': token }
+            headers: {
+                'x-auth-token': token
+            }
         });
         const aspirations = await response.json();
         aspirationsHistoryContainer.innerHTML = '';
@@ -83,9 +98,9 @@ async function fetchUserHistory() {
             aspirations.forEach(asp => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                const alasanDitolakHTML = asp.status === 'Ditolak' && asp.alasan_penolakan
-                    ? `<p class="alasan-ditolak"><strong>Alasan Penolakan:</strong> ${asp.alasan_penolakan}</p>`
-                    : '';
+                const alasanDitolakHTML = asp.status === 'Ditolak' && asp.alasan_penolakan ?
+                    `<p class="alasan-ditolak"><strong>Alasan Penolakan:</strong> ${asp.alasan_penolakan}</p>` :
+                    '';
                 card.innerHTML = `
                     <h3>${asp.title}</h3>
                     <p>${asp.content}</p>
@@ -113,9 +128,17 @@ async function handleAspirationSubmit(e) {
     try {
         const response = await fetch(`${API_URL}/aspirations`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            },
             body: JSON.stringify({
-                title, content, nama_pengirim, npm_pengirim, angkatan_pengirim, kelas_pengirim
+                title,
+                content,
+                nama_pengirim,
+                npm_pengirim,
+                angkatan_pengirim,
+                kelas_pengirim
             })
         });
         if (response.ok) {

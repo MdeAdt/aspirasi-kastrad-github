@@ -23,19 +23,24 @@ loginForm.addEventListener('submit', async (e) => {
     try {
         const response = await fetch(`${API_URL}/login`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email,
-                password
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
         });
         const data = await response.json();
         if (response.ok) {
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
-            window.location.href = 'index.html';
+
+            // --- PERUBAHAN UTAMA DI SINI ---
+            // Jika role adalah 'admin', alihkan ke dasbor admin.
+            if (data.user.role === 'admin') {
+                window.location.href = 'admin.html';
+            } else {
+            // Jika bukan, alihkan ke halaman utama.
+                window.location.href = 'index.html';
+            }
+            // --------------------------------
+
         } else {
             alert(`Login gagal: ${data.message}`);
         }
