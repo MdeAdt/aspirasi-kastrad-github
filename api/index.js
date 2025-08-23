@@ -1,17 +1,21 @@
-// File: api/index.js (Versi Tes Sederhana)
+require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 
-// Endpoint ini hanya untuk mengetes apakah file ini berjalan
-app.get('/api/test', (req, res) => {
-  console.log("--- TES BERHASIL! --- Permintaan diterima di endpoint /api/test.");
-  res.status(200).json({ message: 'Halo dari backend Vercel! Konfigurasi Anda sudah benar.' });
-});
+app.use(cors());
+app.use(express.json());
 
-// Ini akan menangkap semua permintaan lain ke /api/
-app.all('/api/*', (req, res) => {
-    console.log(`--- LOG --- Menerima permintaan untuk: ${req.method} ${req.originalUrl}`);
-    res.status(500).json({ error: 'Endpoint ini belum difungsikan dalam mode tes.' });
-});
+// Langsung connect ke MONGO_URI dari Environment Variables
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB terhubung...'))
+  .catch(err => console.error('Gagal terhubung ke MongoDB:', err));
 
+// Path ke routes tidak perlu diubah karena mereka relatif terhadap file ini
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/aspirations', require('./routes/aspirations'));
+
+// Hapus baris app.listen dan ganti dengan module.exports
+// Vercel akan menangani servernya secara otomatis
 module.exports = app;
