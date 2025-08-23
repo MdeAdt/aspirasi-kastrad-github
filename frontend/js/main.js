@@ -1,21 +1,22 @@
-console.log("File main.js versi baru sudah termuat!");
-
 const API_URL = '/api';
 const navLinks = document.getElementById('nav-links');
 const profileKastrad = document.getElementById('profile-kastrad');
 const userDashboard = document.getElementById('user-dashboard');
 const aspirationsHistoryContainer = document.getElementById('aspirations-history-container');
+
+// Pindahkan deklarasi variabel form ke scope yang lebih luas
 const angkatanSelect = document.getElementById('angkatan_pengirim');
 const kelasSelect = document.getElementById('kelas_pengirim');
-const npmInput = document.getElementById('npm_pengirim'); // <-- Deklarasikan ini
+const npmInput = document.getElementById('npm_pengirim');
 
-// Otomatis hapus karakter selain angka di input NPM
+// Pasang event listener untuk validasi input NPM
 if (npmInput) {
     npmInput.addEventListener('input', () => {
         npmInput.value = npmInput.value.replace(/[^0-9]/g, '');
     });
 }
 
+// Data dan event listener untuk dropdown dinamis
 const kelasData = {
     '2023': ['A'],
     '2024': ['A', 'B', 'C', 'D'],
@@ -39,11 +40,11 @@ if (angkatanSelect) {
     });
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
     checkLoginStatus();
 });
 
-// GANTI SELURUH FUNGSI INI
 function checkLoginStatus() {
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
@@ -55,19 +56,16 @@ function checkLoginStatus() {
             <button id="logout-btn">Logout</button>`;
         document.getElementById('logout-btn').addEventListener('click', logout);
 
-        // --- PERUBAHAN UTAMA DI SINI ---
-        // Hanya tampilkan dasbor pengguna jika rolenya BUKAN 'admin'
-        if (user.role !== 'admin') {
-            profileKastrad.classList.add('hidden');
-            userDashboard.classList.remove('hidden');
-            fetchUserHistory();
-        } else {
-            // Jika admin, biarkan halaman profil yang tampil
-            profileKastrad.classList.remove('hidden');
-            userDashboard.classList.add('hidden');
-        }
-        // --------------------------------
+        profileKastrad.classList.add('hidden');
+        userDashboard.classList.remove('hidden');
 
+        // Pasang event listener ke form HANYA jika pengguna sudah login
+        const aspirationForm = document.getElementById('aspiration-form');
+        if (aspirationForm) {
+            aspirationForm.addEventListener('submit', handleAspirationSubmit);
+        }
+
+        fetchUserHistory();
     } else {
         // Pengguna belum login
         navLinks.innerHTML = '<a href="login.html">Login / Register</a>';
@@ -86,11 +84,10 @@ async function fetchUserHistory() {
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(`${API_URL}/aspirations/my-history`, {
-            headers: {
-                'x-auth-token': token
-            }
+            headers: { 'x-auth-token': token }
         });
         const aspirations = await response.json();
+        
         aspirationsHistoryContainer.innerHTML = '';
         if (aspirations.length === 0) {
             aspirationsHistoryContainer.innerHTML = "<p>Anda belum pernah mengirim aspirasi.</p>";
@@ -98,13 +95,13 @@ async function fetchUserHistory() {
             aspirations.forEach(asp => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                const alasanDitolakHTML = asp.status === 'Ditolak' && asp.alasan_penolakan ?
-                    `<p class="alasan-ditolak"><strong>Alasan Penolakan:</strong> ${asp.alasan_penolakan}</p>` :
-                    '';
+                const alasanDitolakHTML = asp.status === 'Ditolak' && asp.alasan_penolakan
+                    ? `<p class="alasan-ditolak"><strong>Alasan Penolakan:</strong> ${asp.alasan_penolakan}</p>`
+                    : '';
                 card.innerHTML = `
                     <h3>${asp.title}</h3>
                     <p>${asp.content}</p>
-                    ${alasanDitolakHTML}
+                    ${alasanDitolakHTML} 
                     <div class="card-footer">
                         <span></span> <span class="status">Status: ${asp.status}</span>
                     </div>`;
@@ -117,7 +114,9 @@ async function fetchUserHistory() {
 }
 
 async function handleAspirationSubmit(e) {
+    // Baris paling penting untuk mencegah refresh
     e.preventDefault();
+
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
     const nama_pengirim = document.getElementById('nama_pengirim').value;
@@ -128,17 +127,9 @@ async function handleAspirationSubmit(e) {
     try {
         const response = await fetch(`${API_URL}/aspirations`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': token
-            },
+            headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
             body: JSON.stringify({
-                title,
-                content,
-                nama_pengirim,
-                npm_pengirim,
-                angkatan_pengirim,
-                kelas_pengirim
+                title, content, nama_pengirim, npm_pengirim, angkatan_pengirim, kelas_pengirim
             })
         });
         if (response.ok) {
@@ -148,7 +139,8 @@ async function handleAspirationSubmit(e) {
             kelasSelect.disabled = true;
             fetchUserHistory();
         } else {
-            alert(`Gagal mengirim: ${(await response.json()).message}`);
+            const data = await response.json();
+            alert(`Gagal mengirim: ${data.message}`);
         }
     } catch (error) {
         alert('Terjadi kesalahan pada server.');
