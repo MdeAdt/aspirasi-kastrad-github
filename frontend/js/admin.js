@@ -1,4 +1,4 @@
-const API_URL = '/api/aspirations'; // <-- PERBAIKI URL DASAR DI SINI
+const API_URL = '/api/aspirations';
 const tableBody = document.getElementById('admin-aspirations-table');
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,12 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
 async function fetchAdminAspirations() {
     const token = localStorage.getItem('token');
     try {
-        // Panggil endpoint /admin yang benar
-        const response = await fetch(`${API_URL}/admin`, {
-            headers: { 'x-auth-token': token }
-        });
+        const response = await fetch(`${API_URL}/admin`, { headers: { 'x-auth-token': token } });
         if (!response.ok) throw new Error('Gagal mengambil data.');
-
+        
         const aspirations = await response.json();
         tableBody.innerHTML = '';
 
@@ -29,6 +26,7 @@ async function fetchAdminAspirations() {
                 ? `<p class="alasan-ditolak"><strong>Alasan:</strong> ${asp.alasan_penolakan}</p>` 
                 : '';
 
+            // Memastikan menggunakan asp._id (standar MongoDB)
             row.innerHTML = `
                 <td>
                     <strong>${asp.title}</strong><br>
@@ -38,10 +36,10 @@ async function fetchAdminAspirations() {
                 <td>
                     <strong>${asp.nama_pengirim}</strong> (${asp.npm_pengirim})<br>
                     <small>Angkatan ${asp.angkatan_pengirim} - Kelas ${asp.kelas_pengirim}</small><br>
-                    <small><em>Akun: ${asp.author.email}</em></small>
+                    <small><em>Akun: ${asp.author ? asp.author.email : 'N/A'}</em></small>
                 </td>
                 <td>
-                    <select class="status-select" data-id="${asp.id}">
+                    <select class="status-select" data-id="${asp._id}">
                         <option value="Diproses" ${asp.status === 'Diproses' ? 'selected' : ''}>Diproses</option>
                         <option value="Diterima" ${asp.status === 'Diterima' ? 'selected' : ''}>Diterima</option>
                         <option value="Ditolak" ${asp.status === 'Ditolak' ? 'selected' : ''}>Tolak</option>
@@ -49,8 +47,8 @@ async function fetchAdminAspirations() {
                     </select>
                 </td>
                 <td class="action-buttons">
-                    <button class="update-btn" data-id="${asp.id}">Update</button>
-                    <button class="delete-btn" data-id="${asp.id}">Hapus</button>
+                    <button class="update-btn" data-id="${asp._id}">Update</button>
+                    <button class="delete-btn" data-id="${asp._id}">Hapus</button>
                 </td>
             `;
             tableBody.appendChild(row);
