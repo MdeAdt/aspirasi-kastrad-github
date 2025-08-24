@@ -2,23 +2,14 @@
 
 :root {
     --primary-blue: #17497D;
-    /* Darker blue from the header */
     --secondary-blue: #2C70B8;
-    /* Lighter blue accents */
     --background-light: #F0F2F5;
-    /* Light grey background */
     --surface-light: #FFFFFF;
-    /* White surfaces */
     --text-dark: #212529;
     --text-muted: #6C757D;
     --border-color-light: #DEE2E6;
     --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     --danger-red: #DC3545;
-    /* For delete button */
-    --success-green: #28A745;
-    /* Could be used for 'Diterima' status */
-    --warning-yellow: #FFC107;
-    /* Could be used for 'Diproses' status */
 }
 
 body {
@@ -26,6 +17,10 @@ body {
     margin: 0;
     background-color: var(--background-light);
     color: var(--text-dark);
+    /* Untuk Sticky Footer */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 a {
@@ -44,12 +39,10 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--border-color-light);
 }
 
 .header-title h1 {
     color: white;
-    /* White text on the dark blue header */
     margin-bottom: 0.25rem;
 }
 
@@ -60,22 +53,18 @@ header {
 .jargon {
     margin: 0;
     color: #D1DADE;
-    /* Light grey for the slogan */
 }
 
 nav a {
     font-weight: 600;
-    color: white;
-    /* White navigation links */
+    color: var(--primary-blue);
     margin: 0 0.5rem;
 }
 
 #logout-btn {
     background-color: transparent;
     color: white;
-    /* White logout button text */
     border: 1px solid white;
-    /* White border */
     padding: 0.5rem 1rem;
     border-radius: 6px;
     cursor: pointer;
@@ -87,15 +76,15 @@ nav a {
 
 #logout-btn:hover {
     background-color: white;
-    /* White background on hover */
     color: var(--primary-blue);
-    /* Dark blue text on hover */
 }
 
 main {
     max-width: 960px;
     margin: 3rem auto;
     padding: 0 1rem;
+    /* Untuk Sticky Footer */
+    flex-grow: 1;
 }
 
 section {
@@ -111,7 +100,6 @@ h2 {
     padding-bottom: 0.5rem;
     margin-top: 0;
     color: var(--primary-blue);
-    /* Keep the heading text blue */
 }
 
 #profile-kastrad .profile-content {
@@ -123,7 +111,6 @@ form {
     flex-direction: column;
     gap: 1rem;
 }
-
 
 .alasan-ditolak {
     margin-top: 0.75rem;
@@ -153,7 +140,6 @@ select:focus {
     outline: none;
     border-color: var(--secondary-blue);
     box-shadow: 0 0 0 0.25rem rgba(44, 112, 184, 0.25);
-    /* Slightly darker blue for focus */
 }
 
 button[type="submit"] {
@@ -164,14 +150,12 @@ button[type="submit"] {
     font-weight: 600;
     color: white;
     background-color: var(--secondary-blue);
-    /* Use the lighter blue for the submit button */
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
 button[type="submit"]:hover {
     background-color: #215894;
-    /* Darker shade on hover */
 }
 
 .aspirations-list {
@@ -183,7 +167,6 @@ button[type="submit"]:hover {
     background-color: #fff;
     border: 1px solid var(--border-color-light);
     border-left: 5px solid var(--secondary-blue);
-    /* Keep the blue left border */
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: var(--shadow-sm);
@@ -192,7 +175,6 @@ button[type="submit"]:hover {
 .card h3 {
     margin-top: 0;
     color: var(--primary-blue);
-    /* Keep card title blue */
 }
 
 .card-footer {
@@ -226,7 +208,6 @@ td {
 
 th {
     background-color: #E9ECEF;
-    /* Light grey for table header */
     color: var(--text-dark);
 }
 
@@ -247,16 +228,18 @@ th {
 
 .update-btn {
     background-color: var(--secondary-blue);
-    /* Use secondary blue for update */
 }
 
 .delete-btn {
     background-color: var(--danger-red);
-    /* Keep red for delete */
 }
 
-.auth-container {
-    max-width: 450px;
+footer {
+    background-color: var(--primary-blue);
+    color: #D1DADE;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
@@ -280,14 +263,17 @@ th {
     nav a {
         margin: 0 0.75rem;
     }
+}
 
-    footer {
-        text-align: center;
-        padding: 2rem 1rem;
-        margin-top: 4rem;
-        /* Memberi jarak dari konten di atasnya */
-        color: var(--text-muted);
-        font-size: 0.9rem;
-        border-top: 1px solid var(--border-color-light);
-    }
+.auth-container {
+    width: 350px;
+}
+
+.auth-container h2 {
+    font-size: 2rem;
+}
+
+.auth-container form button {
+    width: 100%;
+    box-sizing: border-box;
 }
