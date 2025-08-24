@@ -57,7 +57,7 @@ header {
 
 nav a {
     font-weight: 600;
-    color: var(--primary-blue);
+    color: white;
     margin: 0 0.5rem;
 }
 
@@ -83,7 +83,8 @@ main {
     max-width: 960px;
     margin: 3rem auto;
     padding: 0 1rem;
-    /* Untuk Sticky Footer */
+    width: 100%;
+    box-sizing: border-box;
     flex-grow: 1;
 }
 
@@ -112,6 +113,19 @@ form {
     gap: 1rem;
 }
 
+form label {
+    font-weight: 600;
+    margin-bottom: -0.5rem;
+    font-size: 0.9rem;
+}
+
+form hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid var(--border-color-light);
+}
+
 .alasan-ditolak {
     margin-top: 0.75rem;
     padding: 0.5rem;
@@ -131,6 +145,7 @@ select {
     border: 1px solid var(--border-color-light);
     border-radius: 6px;
     font-size: 1rem;
+    font-family: 'Inter', sans-serif;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -266,7 +281,7 @@ footer {
 }
 
 .auth-container {
-    width: 350px;
+    max-width: 400px;
 }
 
 .auth-container h2 {
@@ -276,22 +291,4 @@ footer {
 .auth-container form button {
     width: 100%;
     box-sizing: border-box;
-}
-
-/* Penataan Ulang Form Aspirasi */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-form label {
-    font-weight: 600;
-    margin-bottom: -0.5rem;
-    font-size: 0.9rem;
-}
-
-form hr {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
 }
