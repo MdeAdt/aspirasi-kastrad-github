@@ -280,4 +280,14 @@ th {
     nav a {
         margin: 0 0.75rem;
     }
+
+    footer {
+        text-align: center;
+        padding: 2rem 1rem;
+        margin-top: 4rem;
+        /* Memberi jarak dari konten di atasnya */
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        border-top: 1px solid var(--border-color-light);
+    }
 }
