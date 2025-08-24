@@ -2,35 +2,38 @@ const API_URL = '/api/aspirations';
 const tableBody = document.getElementById('admin-aspirations-table');
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Cek status login
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || user.role !== 'admin') {
         alert('Akses ditolak! Anda bukan admin.');
         window.location.href = 'index.html';
         return;
     }
+    // Ambil data aspirasi
     fetchAdminAspirations();
+
+    // Pasang event listener untuk tombol logout di sini
+    const logoutButton = document.getElementById('logout-btn');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', logout);
+    }
 });
 
 async function fetchAdminAspirations() {
     const token = localStorage.getItem('token');
     try {
-        const response = await fetch(`${API_URL}/admin`, {
-            headers: {
-                'x-auth-token': token
-            }
-        });
+        const response = await fetch(`${API_URL}/admin`, { headers: { 'x-auth-token': token } });
         if (!response.ok) throw new Error('Gagal mengambil data.');
-
+        
         const aspirations = await response.json();
         tableBody.innerHTML = '';
 
         aspirations.forEach(asp => {
             const row = document.createElement('tr');
-            const alasanDitolakHTML = asp.status === 'Ditolak' && asp.alasan_penolakan ?
-                `<p class="alasan-ditolak"><strong>Alasan:</strong> ${asp.alasan_penolakan}</p>` :
-                '';
+            const alasanDitolakHTML = asp.status === 'Ditolak' && asp.alasan_penolakan 
+                ? `<p class="alasan-ditolak"><strong>Alasan:</strong> ${asp.alasan_penolakan}</p>` 
+                : '';
 
-            // Memastikan menggunakan asp._id (standar MongoDB)
             row.innerHTML = `
                 <td>
                     <strong>${asp.title}</strong><br>
@@ -83,14 +86,8 @@ async function handleUpdateStatus(e) {
     try {
         const response = await fetch(`${API_URL}/admin/${id}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-auth-token': token
-            },
-            body: JSON.stringify({
-                status: newStatus,
-                alasan_penolakan: alasanPenolakan
-            })
+            headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+            body: JSON.stringify({ status: newStatus, alasan_penolakan: alasanPenolakan })
         });
         if (response.ok) {
             alert('Status berhasil diperbarui!');
@@ -110,9 +107,7 @@ async function handleDeleteAspiration(e) {
         try {
             const response = await fetch(`${API_URL}/admin/${id}`, {
                 method: 'DELETE',
-                headers: {
-                    'x-auth-token': token
-                }
+                headers: { 'x-auth-token': token }
             });
             if (response.ok) {
                 alert('Aspirasi berhasil dihapus!');
@@ -124,15 +119,11 @@ async function handleDeleteAspiration(e) {
             console.error('Error deleting aspiration:', error);
         }
     }
+}
 
-    const logoutButton = document.getElementById('logout-btn');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', logout);
-    }
-
-    function logout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        window.location.href = 'login.html';
-    }
+// Fungsi logout sekarang berada di luar fungsi lain, di scope utama
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
 }
