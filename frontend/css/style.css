@@ -70,7 +70,10 @@ header {
 nav a {
     font-weight: 600;
     color: white;
+    border: 1px solid white;
     margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
 }
 
 #logout-btn {
