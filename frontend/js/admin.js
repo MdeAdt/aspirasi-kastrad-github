@@ -121,7 +121,6 @@ async function handleDeleteAspiration(e) {
     }
 }
 
-// Fungsi logout sekarang berada di luar fungsi lain, di scope utama
 function logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

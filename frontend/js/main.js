@@ -4,19 +4,16 @@ const profileKastrad = document.getElementById('profile-kastrad');
 const userDashboard = document.getElementById('user-dashboard');
 const aspirationsHistoryContainer = document.getElementById('aspirations-history-container');
 
-// Pindahkan deklarasi variabel form ke scope yang lebih luas
 const angkatanSelect = document.getElementById('angkatan_pengirim');
 const kelasSelect = document.getElementById('kelas_pengirim');
 const npmInput = document.getElementById('npm_pengirim');
 
-// Pasang event listener untuk validasi input NPM
 if (npmInput) {
     npmInput.addEventListener('input', () => {
         npmInput.value = npmInput.value.replace(/[^0-9]/g, '');
     });
 }
 
-// Data dan event listener untuk dropdown dinamis
 const kelasData = {
     '2023': ['A'],
     '2024': ['A', 'B', 'C', 'D'],
@@ -68,7 +65,7 @@ function checkLoginStatus() {
         fetchUserHistory();
     } else {
         // Pengguna belum login
-        navLinks.innerHTML = '<a href="login.html">Login / Register</a>';
+        navLinks.innerHTML = '<a href="login.html">Login</a>';
         profileKastrad.classList.remove('hidden');
         userDashboard.classList.add('hidden');
     }
@@ -114,7 +111,6 @@ async function fetchUserHistory() {
 }
 
 async function handleAspirationSubmit(e) {
-    // Baris paling penting untuk mencegah refresh
     e.preventDefault();
 
     const title = document.getElementById('title').value;

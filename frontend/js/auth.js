@@ -31,7 +31,6 @@ loginForm.addEventListener('submit', async (e) => {
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
 
-            // --- PERUBAHAN UTAMA DI SINI ---
             // Jika role adalah 'admin', alihkan ke dasbor admin.
             if (data.user.role === 'admin') {
                 window.location.href = 'admin.html';
@@ -39,7 +38,6 @@ loginForm.addEventListener('submit', async (e) => {
             // Jika bukan, alihkan ke halaman utama.
                 window.location.href = 'index.html';
             }
-            // --------------------------------
 
         } else {
             alert(`Login gagal: ${data.message}`);

@@ -16,6 +16,5 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/aspirations', require('./routes/aspirations'));
 
-// Hapus baris app.listen dan ganti dengan module.exports
 // Vercel akan menangani servernya secara otomatis
 module.exports = app;
