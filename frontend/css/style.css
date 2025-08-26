@@ -32,24 +32,24 @@ a {
 }
 
 header {
-    background-image: linear-gradient(to right, #2C70B8, #17497D);
-    padding: 0.8rem 2rem; /* Padding atas/bawah sedikit dikurangi */
+    background-image: linear-gradient(to right, #17497D, #2C70B8);
+    padding: 0.8rem 2rem;
     box-shadow: var(--shadow-sm);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* --- STYLE BARU UNTUK LOGO DAN HEADER --- */
 .header-title {
-    display: flex; /* Membuat logo dan teks sejajar */
-    align-items: center; /* Menyelaraskan secara vertikal */
+    display: flex;
+    align-items: center;
 }
 
 .header-logo {
-    height: 50px; /* Atur tinggi logo */
-    width: auto; /* Lebar otomatis menyesuaikan */
-    margin-right: 15px; /* Jarak antara logo dan teks */
+    height: 50px;
+    width: auto;
+    margin-right: 15px;
+    filter: brightness(0) invert(1);
 }
 
 .header-text h1 {
@@ -61,7 +61,6 @@ header {
 .header-text h1 a {
     color: white;
 }
-/* ------------------------------------- */
 
 .jargon {
     margin: 0;
