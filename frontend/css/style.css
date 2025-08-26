@@ -17,7 +17,6 @@ body {
     margin: 0;
     background-color: var(--background-light);
     color: var(--text-dark);
-    /* Untuk Sticky Footer */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -33,22 +32,36 @@ a {
 }
 
 header {
-    background-image: linear-gradient(to right, #17497D, #2C70B8);
-    padding: 1rem 2rem;
+    background-image: linear-gradient(to right, #2C70B8, #17497D);
+    padding: 0.8rem 2rem; /* Padding atas/bawah sedikit dikurangi */
     box-shadow: var(--shadow-sm);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.header-title h1 {
-    color: white;
-    margin-bottom: 0.25rem;
+/* --- STYLE BARU UNTUK LOGO DAN HEADER --- */
+.header-title {
+    display: flex; /* Membuat logo dan teks sejajar */
+    align-items: center; /* Menyelaraskan secara vertikal */
 }
 
-.header-title h1 a {
+.header-logo {
+    height: 50px; /* Atur tinggi logo */
+    width: auto; /* Lebar otomatis menyesuaikan */
+    margin-right: 15px; /* Jarak antara logo dan teks */
+}
+
+.header-text h1 {
+    color: white;
+    margin-bottom: 0.25rem;
+    margin-top: 0;
+}
+
+.header-text h1 a {
     color: white;
 }
+/* ------------------------------------- */
 
 .jargon {
     margin: 0;
@@ -281,7 +294,7 @@ footer {
 }
 
 .auth-container {
-    max-width: 400px;
+    max-width: 600px;
 }
 
 .auth-container h2 {
