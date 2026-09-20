@@ -14,10 +14,12 @@ if (npmInput) {
     });
 }
 
+// Data kelas diperbarui & ditambahkan koma yang hilang
 const kelasData = {
     '2023': ['A'],
     '2024': ['A', 'B', 'C', 'D'],
-    '2025': ['A', 'B', 'C', 'D', 'E']
+    '2025': ['A', 'B', 'C', 'D', 'E'],
+    '2026': ['A', 'B', 'C', 'D']
 };
 
 if (angkatanSelect) {
@@ -36,7 +38,6 @@ if (angkatanSelect) {
         }
     });
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     checkLoginStatus();
@@ -61,7 +62,6 @@ function checkLoginStatus() {
             namaInput.value = user.name;
             namaInput.readOnly = true; // Agar tidak bisa diubah
         }
-        // -------------------------
 
         // Pasang event listener ke form HANYA jika pengguna sudah login
         const aspirationForm = document.getElementById('aspiration-form');
